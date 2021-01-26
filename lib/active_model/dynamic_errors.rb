@@ -13,8 +13,8 @@ module ActiveModel
     def full_messages
       full_messages = []
 
-      each do |attribute, messages|
-        messages = Array.wrap(messages)
+      group_by(&:attribute).each do |attribute, errors|
+        messages = Array.wrap(errors.map(&message))
         next if messages.empty?
 
         if attribute == :base
